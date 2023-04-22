@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+    <!--  Boostrap css  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="">Spring Boot</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Product</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-md mt-4">
+        <button type="button" class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#addForm">Add product</button>
+        <div class="clearfix"></div>
+        <table class="table table-striped mt-3">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="body-table-product">
+            </tbody>
+        </table>
+    </div>
+    <footer class="text-center text-lg-start bg-light text-muted" style="position: fixed; bottom: 0; width: 100%">
+        <div class="text-center p-1" style="background-color: rgba(0, 0, 0, 0.05)">
+            &copy; Nhóm 13 - Sáng Thứ 7 >.<
+        </div>
+    </footer>
+
+    <!--  Form add product popup  -->
+    <div class="modal fade" id="addForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Add new Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="emptyInputs()"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form -->
+                    <div class="mb-3">
+                        <label for="inputId" class="form-label">Id</label>
+                        <input type="number" class="form-control" id="inputId" placeholder="Enter id...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputName" class="form-label">Name</label>
+                        <input type="email" class="form-control" id="inputName" placeholder="Enter name...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="inputDescription" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputPrice" class="form-label">Price</label>
+                        <input type="number" step="0.1" class="form-control" id="inputPrice" placeholder="Enter price...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputQuantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="inputQuantity" placeholder="Enter quantity...">
+                    </div>
+                    <!-- End form -->
+                </div>
+                <div id="inform-status" class="container-md"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="emptyInputs()">Close</button>
+                    <button type="button" class="btn btn-primary" id="btn-save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Form edit product popup  -->
+    <div class="modal fade" id="editForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel1">Edit Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="emptyInputs()"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form -->
+                    <div class="mb-3">
+                        <label for="inputId" class="form-label">Id</label>
+                        <input type="number" class="form-control" id="editId" placeholder="Enter id...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputName" class="form-label">Name</label>
+                        <input type="email" class="form-control" id="editName" placeholder="Enter name...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="editDescription" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputPrice" class="form-label">Price</label>
+                        <input type="number" step="0.1" class="form-control" id="editPrice" placeholder="Enter price...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputQuantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="editQuantity" placeholder="Enter quantity...">
+                    </div>
+                    <!-- End form -->
+                </div>
+                <div id="inform-status-edit" class="container-md"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="emptyInputs()">Close</button>
+                    <button type="button" class="btn btn-primary" id="btn-update">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  Bootstrap js  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <script>
+        // Handle AJAX
+        // Action: Show products
+        $(document).ready(function () {
+            showProducts();
+        })
+
+        function showProducts() {
+            $.ajax({
+                method: 'get',
+                url: 'products',
+                success: function (data) {
+                    let render = '';
+                    data.forEach(ele => {
+                        render += `
+                        <tr>
+                            <td name="id">${ele.id}</td>
+                            <td name="name">${ele.name}</td>
+                            <td name="description">${ele.description}</td>
+                            <td name="price">${ele.price}$</td>
+                            <td name="quantity">${ele.quantity}</td>
+                            <td>
+                                <button type="button" class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editForm">Edit</button>
+                                <button type="button" class="btn btn-danger btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                        `;
+                    })
+                    $('#body-table-product').html(render);
+                }
+            })
+        }
+
+        // Action: Add product
+        $('#btn-save').click(function (e) {
+            const id = $('#inputId').val();
+            const name = $('#inputName').val();
+            const description = $('#inputDescription').val();
+            const price = $('#inputPrice').val();
+            const quantity = $('#inputQuantity').val();
+
+            $.ajax({
+                method: 'post',
+                url: 'addProduct',
+                data: {
+                    id,
+                    name,
+                    description,
+                    price,
+                    quantity
+                },
+                success: function (data) {
+                    if (data.status === "success") {
+                        $('#inform-status').html(`
+                            <div class="alert alert-success" role="alert">
+                                Product has been created successfully!
+                            </div>
+                        `)
+                    } else {
+                        $('#inform-status').html(`
+                            <div class="alert alert-danger" role="alert">
+                                ${data.msg}
+                            </div>
+                        `)
+                    }
+                }
+            })
+        })
+
+        // Action: Edit product
+        // Open edit form
+        $(document).on('click', '.btn-edit', function (e) {
+            const row = $(this).parent().parent();
+            const id = row.find('td[name="id"]').text();
+            const name = row.find('td[name="name"]').text();
+            const description = row.find('td[name="description"]').text();
+            const price = row.find('td[name="price"]').text().replace('$', '');
+            const quantity = row.find('td[name="quantity"]').text();
+
+            $('#editForm').find('input#editId').val(id);
+            $('#editForm').find('input#editName').val(name);
+            $('#editForm').find('textarea#editDescription').val(description);
+            $('#editForm').find('input#editPrice').val(price);
+            $('#editForm').find('input#editQuantity').val(quantity);
+        })
+
+        // Send update req
+        $('#btn-update').click(function (e) {
+            const id = $('#editId').val();
+            const name = $('#editName').val();
+            const description = $('#editDescription').val();
+            const price = $('#editPrice').val();
+            const quantity = $('#editQuantity').val();
+
+            $.ajax({
+                type: 'put',
+                url: 'update',
+                data: {
+                    id,
+                    name,
+                    description,
+                    price,
+                    quantity
+                },
+                success: function (data) {
+                    if (data.status === "success") {
+                        $('#inform-status-edit').html(`
+                            <div class="alert alert-success" role="alert">
+                                Product has been updated successfully!
+                            </div>
+                        `)
+                    } else {
+                        $('#inform-status-edit').html(`
+                            <div class="alert alert-danger" role="alert">
+                                ${data.msg}
+                            </div>
+                        `)
+                    }
+                }
+            })
+        })
+
+        // Action: Delete product
+        $(document).on('click', '.btn-delete', function (e) {
+            const row = $(this).parent().parent();
+            const id = row.find('td[name="id"]').text();
+
+            $.ajax({
+                type: 'delete',
+                url: `delete/${id}`,
+                success: function (data) {
+                    if (data.status === "success") {
+                        showProducts();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            })
+        })
+
+        // Func empty input
+        function emptyInputs() {
+            $('#inputId').val('');
+            $('#inputName').val('');
+            $('#inputDescription').val('');
+            $('#inputPrice').val('');
+            $('#inputQuantity').val('');
+        }
+    </script>
+</body>
+</html>
